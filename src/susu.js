@@ -66,7 +66,7 @@ const mixData = (data) => {
 
         const outSongPath = el.outSongPath
         const songPath = el.songPath
-        const passToffmpeg = `ffmpeg -i ${songPath} -i ${effectAudioPath} -i ${effectAudioPath} -i ${imgPath} -filter_complex "[0]adelay=0|0[a1];[1]adelay=${firstMix}|${firstMix}[a2];[2]adelay=${secondMix}|${secondMix}[a3];[a1][a2][a3]amix=inputs=3[a]" -map "[a]" -map 3:0 -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)"  ${outSongPath}`
+        const passToffmpeg = `ffmpeg -i ${songPath} -i ${effectAudioPath} -i ${effectAudioPath} -i ${imgPath} -filter_complex "[0]adelay=0|0[a1];[1]adelay=${firstMix}|${firstMix}[a2];[2]adelay=${secondMix}|${secondMix}[a3];[a1][a2][a3]amix=inputs=3:dropout_transition=0:normalize=0[a]" -map "[a]" -map 3:0 -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)"  ${outSongPath}`
         // console.log(passToffmpeg)
         
         const resp = shell.exec(passToffmpeg);
