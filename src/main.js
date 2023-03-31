@@ -74,7 +74,7 @@ const mixData = (data) => {
         const songPath = el.songPath
         
         
-        const passToffmpeg = `ffmpeg -i "${songPath}" -i "${effectAudioPath}" -i "${effectAudioPath}" -i "${imgPath}" -filter_complex "[1:a]adelay=${firstMix}|${firstMix}[a1];[2:a]adelay=${secondMix}|${secondMix}[a2];[0:a][a1][a2]amix=inputs=3:duration=first:dropout_transition=0"  -map 3:0 -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" -ar 44100 -ac 2 -b:a 320k -y "${outSongPath}"`
+        const passToffmpeg = `ffmpeg -i "${songPath}" -i "${effectAudioPath}" -i "${effectAudioPath}" -i "${imgPath}" -filter_complex "[1:a]adelay=${firstMix}|${firstMix}[a1];[2:a]adelay=${secondMix}|${secondMix}[a2];[0:a][a1][a2]amix=inputs=3:dropout_transition=0:normalize=0[a]" -map 3:0 -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" -ar 44100 -ac 2 -b:a 320k -y "${outSongPath}"`
         // -af loudnorm=I=-16:LRA=11:TP=-1.5
 
         // const passToffmpeg = `ffmpeg -i "${songPath}" -i "${effectAudioPath}" -i "${effectAudioPath}" -i "${imgPath}" -filter_complex "[0]adelay=0|0[a1];[1]adelay=${firstMix}|${firstMix}[a2];[2]adelay=${secondMix}|${secondMix}[a3];[a1][a2][a3]amix=inputs=3,dynaudnorm[a]" -map "[a]" -map 3:0 -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" -ar 44100 -ac 2 -b:a 320k -y "${outSongPath}"`
